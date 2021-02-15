@@ -1,5 +1,5 @@
 from parser.generate_urls import GenerateLinksCV
-from parser.parser_rabota_by import Parser, AverageNumbers
+from parser.rabota_by_parser import Parser, AverageNumbers
 
 if __name__ == '__main__':
 

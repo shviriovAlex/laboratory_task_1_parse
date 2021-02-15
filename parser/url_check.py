@@ -9,18 +9,20 @@ class CorrectUrl:
 
     def check_url(self):
         try:
-            r = requests.get(self.url, headers=self.headers)
+            r = requests.head(self.url, headers=self.headers)
             r.raise_for_status()
             print('Successful connection!', self.url)
         except exceptions.HTTPError:
-            print('Something went wrong.Incorrect URL or check your internet connection!')
-            quit('Check if the address is correct')
+            raise exceptions.HTTPError('Something went wrong.Incorrect URL or check your internet connection!'
+                                       '\nCheck if the address is correct')
+
         except exceptions.ConnectionError:
-            print(f"Something went wrong. Server Error!\nCan't find {self.url}!")
-            quit('Check if the address is correct')
+            raise exceptions.ConnectionError(f"Something went wrong. Server Error!\nCan't find {self.url}!"
+                                             f"\nCheck if the address is correct")
         except exceptions.MissingSchema:
-            print(f"Something went wrong. Invalid url!\nTry https://{self.url}!")
-            quit('Check if the address is correct')
+            raise exceptions.MissingSchema(f"Something went wrong. Invalid url!\nTry https://{self.url}!"
+                                           f"\n'Check if the address is correct'")
+
         except exceptions.InvalidSchema:
-            print(f"Something went wrong. Invalid url {self.url}!")
-            quit('Check if the address is correct')
+            raise exceptions.InvalidSchema(f"Something went wrong. Invalid url {self.url}!"
+                                           f"\nCheck if the address is correct")
