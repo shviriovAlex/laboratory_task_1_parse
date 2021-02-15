@@ -1,26 +1,28 @@
 import pytest
+import requests
 from requests import exceptions
-from parser.url_check import CorrectUrl
+from rabota_by_parser.url_check import CorrectUrl
+
 
 class TestCheckUrl:
 
     def setup(self):
-        self.url = 'https://rabota.by'
-        self.url1 = 'https://raa.by'
-        self.url2 = 'ht://rabota.by'
-        self.url3 = '.'
-        self.url4 = 'rabota.by'
-        self.check = CorrectUrl
+        self.headers = {'user-agent': 'my-app/0.0.1'}
 
-    def test_raise_connection_error(self):
-        with pytest.raises(exceptions.ConnectionError):
-            self.check(self.url1).check_url()
+    def test_internet_connection(self):
+        check_connection = requests.head('https://www.google.com/').status_code
+        assert check_connection == 200
 
-    def test_raise_invalid_schema_error(self):
-        with pytest.raises(exceptions.InvalidSchema):
-            self.check(self.url2).check_url()
+    def test_response_200(self):
+        status = requests.head('https://rabota.by', headers=self.headers).status_code
+        assert status == 200
 
-    def test_raise_missing_schema_error(self):
-        with pytest.raises(exceptions.MissingSchema):
-            self.check(self.url3).check_url()
 
+@pytest.mark.parametrize('url, error', [
+    ('https://raa.by', exceptions.ConnectionError),
+    ('ht://rabota.by', exceptions.InvalidSchema),
+    ('rabota.by', exceptions.MissingSchema)
+])
+def test_raise_connection_error(url, error):
+    with pytest.raises(error):
+        assert CorrectUrl(url).check_url() == error

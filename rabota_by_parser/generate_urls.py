@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from parser.url_check import CorrectUrl
+from rabota_by_parser.url_check import CorrectUrl
 
 
 class GetPages:
@@ -18,7 +18,7 @@ class GetPages:
         for page in all_pages:
             self.count_pages = int(page["data-page"]) + 1
 
-        for page in range(1):
+        for page in range(self.count_pages):
             self.main_url += str(page)
             CorrectUrl(self.main_url).check_url()
             self.all_urls.append(self.main_url)
@@ -32,7 +32,7 @@ class GenerateLinksCV:
     def __init__(self, main_url):
         self.main_url = main_url
         self.headers = {'user-agent': 'my-app/0.0.1'}
-        self.links = []
+        self.all_links = []
 
     def generate_links(self):
 
@@ -41,5 +41,5 @@ class GenerateLinksCV:
                     class_="bloko-link HH-LinkModifier"):
                 CorrectUrl(cv_link['href']).check_url()
                 cv_page = requests.get(cv_link['href'], headers=self.headers)
-                self.links.append(cv_page)
-        return self.links
+                self.all_links.append(cv_page)
+        return self.all_links

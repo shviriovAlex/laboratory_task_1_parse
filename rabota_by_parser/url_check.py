@@ -6,11 +6,12 @@ class CorrectUrl:
     def __init__(self, url):
         self.url = url
         self.headers = {'user-agent': 'my-app/0.0.1'}
+        self.r = requests.head(self.url, headers=self.headers)
 
     def check_url(self):
         try:
-            r = requests.head(self.url, headers=self.headers)
-            r.raise_for_status()
+
+            self.r.raise_for_status()
             print('Successful connection!', self.url)
         except exceptions.HTTPError:
             raise exceptions.HTTPError('Something went wrong.Incorrect URL or check your internet connection!'
@@ -26,3 +27,4 @@ class CorrectUrl:
         except exceptions.InvalidSchema:
             raise exceptions.InvalidSchema(f"Something went wrong. Invalid url {self.url}!"
                                            f"\nCheck if the address is correct")
+        return self.url
