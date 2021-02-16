@@ -1,28 +1,15 @@
 import pytest
-import requests
-from bs4 import BeautifulSoup
 from rabota_by_parser.generate_urls import GetPages, GenerateLinksCV
 
 
 class TestGetPages:
 
-    @pytest.fixture()
-    def setup(self):
-        self.url = 'https://rabota.by/search/vacancy?area=16&fromSearchLine=true&st=searchVacancy&text=python'
-        self.links = []
-        self.generate_page = GetPages(self.url)
-
-    def test_get_pages(self, setup):
-        assert len(self.generate_page.generate_pages()) == 9
+    def test_get_pages(self, main_url):
+        assert len(GetPages(main_url).generate_pages()) == 9
 
 
 class TestGenerateLinksCV:
 
-    def setup(self):
-        self.url = 'https://rabota.by/search/vacancy?area=16&fromSearchLine=true&st=searchVacancy&text=python'
-        self.generate = GenerateLinksCV(self.url)
-        self.headers = {'user-agent': 'my-app/0.0.1'}
-
-    @pytest.mark.skip(reqson="Because it's too long")
-    def test_count_links(self):
-        assert len(self.generate.generate_links()) == 50
+    @pytest.mark.skip(reason="Because it's too long")
+    def test_count_links(self, main_url):
+        assert len(GenerateLinksCV(main_url).generate_links()) == 50
