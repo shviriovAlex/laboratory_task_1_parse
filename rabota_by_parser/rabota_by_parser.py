@@ -19,7 +19,6 @@ class Parser:
                     self.all_words.setdefault(word, [len(re.findall(word, str(cv_page_soup).lower()))])
                 else:
                     self.all_words[word].append(len(re.findall(word, str(cv_page_soup).lower())))
-            # [self.all_words.setdefault(word, [len(re.findall(word, str(cv_page_soup).lower()))]) if word not in self.all_words else self.all_words[word].append(len(re.findall(word, str(cv_page_soup).lower()))) for word in self.words]
         return self.all_words
 
 
