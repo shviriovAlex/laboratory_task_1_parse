@@ -29,6 +29,6 @@ def test_average_numbers(all_words, result):
     (["https://rabota.by/vacancy/41595848?query=python"], ['linux'])
 ])
 def test_around_number(url, words, headers):
-    url = [requests.get(url[0], headers=headers)]
+    url = [requests.get(url[1], headers=headers)]
     dict_words = Parser(words, url).page_with_vacancy()
     assert 0.5 <= AverageNumbers(dict_words).average_number()[words[0]][0] <= 1.5
