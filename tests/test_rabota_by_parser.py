@@ -32,3 +32,47 @@ def test_around_number(url, words, headers):
     url = [requests.get(url[1], headers=headers)]
     dict_words = Parser(words, url).page_with_vacancy()
     assert 0.5 <= AverageNumbers(dict_words).average_number()[words[0]][0] <= 1.5
+
+
+@pytest.mark.parametrize('url, words', [
+    (["https://rabota.by/vacancy/41683035?query=python"], ['python']),
+    (["https://rabota.by/vacancy/40520308?query=python"], ['flask']),
+    (["https://rabota.by/vacancy/41595848?query=python"], ['linux'])
+])
+def test_around_number_2(url, words, headers):
+    url = [requests.get(url[1], headers=headers)]
+    dict_words = Parser(words, url).page_with_vacancy()
+    assert 0.5 <= AverageNumbers(dict_words).average_number()[words[0]][0] <= 1.5
+
+
+@pytest.mark.parametrize('url, words', [
+    (["https://rabota.by/vacancy/41683035?query=python"], ['python']),
+    (["https://rabota.by/vacancy/40520308?query=python"], ['flask']),
+    (["https://rabota.by/vacancy/41595848?query=python"], ['linux'])
+])
+def test_around_number_3(url, words, headers):
+    url = [requests.get(url[1], headers=headers)]
+    dict_words = Parser(words, url).page_with_vacancy()
+    assert 0.5 <= AverageNumbers(dict_words).average_number()[words[0]][0] <= 1.5
+
+
+@pytest.mark.parametrize('url, words', [
+    (["https://rabota.by/vacancy/41683035?query=python"], ['python']),
+    (["https://rabota.by/vacancy/40520308?query=python"], ['flask']),
+    (["https://rabota.by/vacancy/41595848?query=python"], ['linux'])
+])
+def test_around_number_2(url, words, headers):
+    url = [requests.get(url[1], headers=headers)]
+    dict_words = Parser(words, url).page_with_vacancy()
+    assert 0.5 <= AverageNumbers(dict_words).average_number()[words[0]][0] <= 1.5
+
+
+@pytest.mark.parametrize('url, words', [
+    (["https://rabota.by/vacancy/41683035?query=python"], ['python']),
+    (["https://rabota.by/vacancy/40520308?query=python"], ['flask']),
+    (["https://rabota.by/vacancy/41595848?query=python"], ['linux'])
+])
+def test_around_number_3(url, words, headers):
+    url = [requests.get(url[1], headers=headers)]
+    dict_words = Parser(words, url).page_with_vacancy()
+    assert 0.5 <= AverageNumbers(dict_words).average_number()[words[0]][0] <= 1.5
